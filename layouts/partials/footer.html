@@ -12,10 +12,9 @@
   </div>
 </footer>
 
-{{ $menu := resources.Get "js/menu.js" | js.Build }}
-{{ $prism := resources.Get "js/prism.js" | js.Build }}
-{{ $theme := resources.Get "js/theme.js" | js.Build }}
-{{ $bundle := slice $menu $prism $theme | resources.Concat "bundle.js" | resources.Minify }}
-<script type="text/javascript" src="{{ $bundle.RelPermalink }}"></script>
+{{ $menu := resources.Get "js/menu.js" }}
+{{ $theme := resources.Get "js/theme.js" }}
+{{ $bundle := slice $menu $theme | resources.Concat "js/bundle.js" | js.Build (dict "sourceMap" "external" ) | resources.Minify | resources.Fingerprint }}
+<script type="text/javascript" src="{{ $bundle.RelPermalink }}" integrity="{{ $bundle.Data.Integrity }}"></script>
 
 {{- partial "extended_footer.html" . }}

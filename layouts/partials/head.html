@@ -16,14 +16,16 @@
 
 <!-- Theme CSS -->
 {{ $res := resources.Get "css/style.scss" }}
-{{ $style := $res | resources.ToCSS }}
+{{ $style := $res | resources.ToCSS (dict "targetPath" "css/styles.css" "enableSourceMap" true) | resources.Minify | resources.Fingerprint }}
 <link rel="stylesheet" href="{{ $style.RelPermalink }}" />
 <!-- Custom CSS to override theme properties (/static/style.css) -->
-<link rel="stylesheet" href="{{ "style.css" | absURL }}" />
+{{ $custom_res := resources.Get "style.scss" }}
+{{ $custom_style := $custom_res | resources.ToCSS (dict "targetPath" "css/custom_styles.css" "enableSourceMap" true) | resources.Minify | resources.Fingerprint }}
+<link rel="stylesheet" href="{{ $custom_style.RelPermalink }}"/>
 
 <!-- Icons -->
-<link rel="apple-touch-icon-precomposed" sizes="144x144" href="{{ "img/apple-touch-icon-144-precomposed.png" | absURL }}" />
-<link rel="shortcut icon" href="{{ "img/favicon.png" | absURL }}" />
+<link rel="apple-touch-icon-precomposed" href="{{ $.Site.Params.favicon }}" />
+<link rel="shortcut icon" href="{{ $.Site.Params.favicon }}" />
 
 <!-- Fonts -->
 <link href="{{ (resources.Get "fonts/Inter-Italic.woff2").RelPermalink }}" rel="preload" type="font/woff2" as="font" crossorigin="">
