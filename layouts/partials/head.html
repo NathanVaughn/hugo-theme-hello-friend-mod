@@ -16,11 +16,11 @@
 
 <!-- Theme CSS -->
 {{ $res := resources.Get "css/style.scss" }}
-{{ $style := $res | resources.ToCSS (dict "targetPath" "css/styles.css" "enableSourceMap" true) | resources.Minify | resources.Fingerprint }}
+{{ $style := $res | css.Sass (dict "targetPath" "css/styles.css" "enableSourceMap" true) | resources.Minify | resources.Fingerprint }}
 <link rel="stylesheet" href="{{ $style.RelPermalink }}" />
 <!-- Custom CSS to override theme properties (/static/style.css) -->
 {{ $custom_res := resources.Get "style.scss" }}
-{{ $custom_style := $custom_res | resources.ToCSS (dict "targetPath" "css/custom_styles.css" "enableSourceMap" true) | resources.Minify | resources.Fingerprint }}
+{{ $custom_style := $custom_res | css.Sass (dict "targetPath" "css/custom_styles.css" "enableSourceMap" true) | resources.Minify | resources.Fingerprint }}
 <link rel="stylesheet" href="{{ $custom_style.RelPermalink }}"/>
 
 <!-- Icons -->
