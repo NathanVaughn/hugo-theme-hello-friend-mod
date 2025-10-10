@@ -15,6 +15,6 @@
 {{ $menu := resources.Get "js/menu.js" }}
 {{ $theme := resources.Get "js/theme.js" }}
 {{ $bundle := slice $menu $theme | resources.Concat "js/bundle.js" | js.Build (dict "sourceMap" "external" ) | resources.Minify | resources.Fingerprint }}
-<script type="text/javascript" src="{{ $bundle.RelPermalink }}" integrity="{{ $bundle.Data.Integrity }}"></script>
+<script src="{{ $bundle.RelPermalink }}" integrity="{{ $bundle.Data.Integrity }}"></script>
 
 {{- partial "extended_footer.html" . }}
